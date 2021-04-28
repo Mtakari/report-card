@@ -14,3 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get("signup","Auth\RegisterContoroller@showRegistrationForm")->name("signup.get");
+Route::post("signup","Auth\RegisterContoroller@register")->name("signup.post");
+
+Route::get("login","Auth\LoginContorller@showLoginForm")->name("login");
+Route::post("login","Auth\LoginContoroller@login")->name("login.post");
+Route::get("logout","Auth\LoginContoroller@logout")->name("logout.get");
