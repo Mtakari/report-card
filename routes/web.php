@@ -24,5 +24,7 @@ Route::get("logout","Auth\LoginController@logout")->name("logout.get");
 Route::resource("users","UsersController");
 
 Route::group(["middleware"=>["auth"]],function(){
-        
+    Route::resource("users","UsersController");
+    //Route::resource("accounts","AccountsController");
+    //Route::resource("transactions"."TransactionsController");
 });

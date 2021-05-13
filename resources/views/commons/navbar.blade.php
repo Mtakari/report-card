@@ -24,31 +24,6 @@
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">取引一覧</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">売上高</a>
-                        <a class="dropdown-item" href="#">売上原価</a>
-                        <a class="dropdown-item" href="#">水道光熱費</a>
-                        <a class="dropdown-item" href="#">通信費</a>
-                        <a class="dropdown-item" href="#">接待交際費</a>
-                        <a class="dropdown-item" href="#">地代家賃</a>
-                        <a class="dropdown-item" href="#">旅費交通費</a>
-                        <a class="dropdown-item" href="#">リース料</a>
-                        <a class="dropdown-item" href="#">会議費</a>
-                        <a class="dropdown-item" href="#">雑費</a>
-                        <a class="dropdown-item" href="#">消耗品費</a>
-                        <a class="dropdown-item" href="#">受取利息</a>
-                        <a class="dropdown-item" href="#">受取配当金</a>
-                        <a class="dropdown-item" href="#">受取地代</a>
-                        <a class="dropdown-item" href="#">為替差益</a>
-                        <a class="dropdown-item" href="#">雑収入</a>
-                        <a class="dropdown-item" href="#">支払利息</a>
-                        <a class="dropdown-item" href="#">支払手数料</a>
-                        <a class="dropdown-item" href="#">手形売却損</a>
-                        <a class="dropdown-item" href="#">雑損失</a>
-                        <a class="dropdown-item" href="#">保険差益</a>
-                        <a class="dropdown-item" href="#">固定資産売却益</a>
-                        <a class="dropdown-item" href="#">固定資産売却損</a>
-                        <a class="dropdown-item" href="#">投資有価証券売却損</a>
-                        <a class="dropdown-item" href="#">法人税住民税及び事業税</a>
-                        <a class="dropdown-item" href="#">法人税等調整額</a>
                     </li>    
                     </div>
                         {{--<li class="nav-item">{!! link_to_route('accounts.index', '勘定科目・分類一覧') !!}</li>--}}    
