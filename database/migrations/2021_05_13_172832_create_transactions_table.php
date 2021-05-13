@@ -20,8 +20,11 @@ class CreateTransactionsTable extends Migration
             $table->date("day");
             $table->integer("amount");
             $table->string("description");
-            $table->string("pdf");
+            $table->string("pdf")->nullable();
             $table->timestamps();
+            
+            $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
+            $table->foreign("account_id")->references("id")->on("accounts")->onDelete("cascade");
         });
     }
 
