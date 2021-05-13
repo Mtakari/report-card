@@ -21,7 +21,7 @@
             <ul class="navbar-nav">
         @if(Auth::check())        
                 <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">menu</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">取引一覧</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">売上高</a>
                         <a class="dropdown-item" href="#">売上原価</a>
@@ -51,7 +51,8 @@
                         <a class="dropdown-item" href="#">法人税等調整額</a>
                     </li>    
                     </div>
-                        <li class="nav-item">{!! link_to_route('logout.get', 'Logout') !!}</li>        
+                        {{--<li class="nav-item">{!! link_to_route('accounts.index', '勘定科目・分類一覧') !!}</li>--}}    
+                        <li class="nav-item">{!! link_to_route('logout.get', 'Logout') !!}</li>
         @else
             
                 <li class="nav-item">{!! link_to_route('signup.get', 'Signup', [], ['class' => 'nav-link']) !!}</li>
