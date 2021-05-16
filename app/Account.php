@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Account extends Model
 {
     protected $fillable = [
-        "name"    
+        "name","account_class_id"    
     ];
     
     public function user() {

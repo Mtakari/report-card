@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Account;
 
+use App\Account_class;
+
+
 class AccountsController extends Controller
 {
     /**
@@ -19,7 +22,7 @@ class AccountsController extends Controller
             
             $user = \Auth::user();
             
-            $accounts = $user->accounts()->orderBy("created_at","desc")->pagenate("100");
+            $accounts = $user->accounts()->orderBy("created_at","desc")->paginate("100");
             
             return view("accounts.index",[
                 "accounts" => $accounts,    
@@ -35,13 +38,16 @@ class AccountsController extends Controller
      */
     public function create()
     {
+        $user = \Auth::user();
+        
         $account = new Account;
+        
+        $account_classes = \App\Account_class::orderBy("number","asc")->pluck("class","number");
         
         return view("accounts.create",[
             "account" => $account,    
-        ]);
+        ])->with(['account_classes' => $account_classes]);;
         
-        //return redirect()->route("accounts.index");
     }
 
     /**
@@ -52,13 +58,17 @@ class AccountsController extends Controller
      */
     public function store(Request $request)
     {
+        $user = \Auth::user();
+        
         $request->validate([
             "name" => "required|max:255",   
         ]);
         
-        $account->user()->accounts()->create([
-            "name" => $request->name,    
+        $account=$user->accounts()->create([
+            "name" => $request->name,
+            "account_class_id" => $request->account_class_id,
         ]);
+        
         
         return redirect()->route("accounts.index");
     }
@@ -95,7 +105,7 @@ class AccountsController extends Controller
             "account" => $account,    
         ]);
         
-        return redirect()->route("accounts.index");
+        //return redirect()->route("accounts.index");
     }
 
     /**
