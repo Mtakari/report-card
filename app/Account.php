@@ -15,7 +15,7 @@ class Account extends Model
     }
     
     public function account_class() {
-        return $this->belongsTo(Account_class::class);
+        return $this->belongsTo(AccountClass::class);
     }
     
     public function transactions() {

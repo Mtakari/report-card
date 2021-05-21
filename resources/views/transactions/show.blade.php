@@ -10,6 +10,10 @@
             <td>{{ $transaction->id }}</td>
         </tr>
         <tr>
+            <th>name</th>
+            <td>{{ $transaction->account->name }}</td>
+        </tr>
+        <tr>
             <th>day</th>
             <td>{{ $transaction->day }}</td>
         </tr>

@@ -9,17 +9,22 @@
                 <tr>
                     <th>id</th>
                     <th>勘定科目</th>
+                    <th>日付</th>
+                    <th>金額</th>
+                    <th>摘要</th>
+                    <th>ファイル</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($transactions as $transaction)
                 @if($transaction->pdf)
                 <tr>
-                    <td>{{ $transaction->id }}</td>
+                    <td>{{ link_to_route("transactions.show",$transaction->id,["transaction" => $transaction->id])  }}</td>
+                    <td>{{ $transaction->account->name }}</td>
                     <td>{{ $transaction->day }}</td>
                     <td>{{ $transaction->amount }}</td>
                     <td>{{ $transaction->description }}</td>
-                    <td><img src="{{ $transaction->pdf }}"></td>
+                    <td><a href="{{ Storage::disk('s3')->url($transaction->pdf) }}" >ファイル</a></td>
                 </tr>
                 @endif
                 @endforeach

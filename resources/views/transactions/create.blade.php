@@ -5,9 +5,11 @@
     <h1>取引入力ページ</h1>
     <div class ="row"> 
         <div class = "col-6">
-            {!! Form::model($transaction,["route" => "transactions.store"]) !!}
-            {{Form::select('account_id', ["transaction => ",$transaction->account_id])}}
-                
+            <a>勘定科目選択:</a>
+            {!! Form::model($transaction,["route" => "transactions.store","files" => true]) !!}
+            
+                {{ Form::select('account_id',$accounts,null, ["class" => "form" ,"id" => "account_id"]) }}
+            
             <div class = "form-group">
                 {!! Form::label("day","日付:") !!}
                 {!! Form::text("day",null,["class"=>"form-control"]) !!}
@@ -18,16 +20,17 @@
             </div>
             <div class = "form-group">
                 {!! Form::label("description","摘要:") !!}
-                {!! Form::text("day",null,["class"=>"form-control"]) !!}
+                {!! Form::text("description",null,["class"=>"form-control"]) !!}
             </div>
-            <div class = "form-group">
-                {!! Form::label("pdf","アップロード:") !!}
-                {!! Form::text("pdf",null,["class"=>"form-control"]) !!}
+            <a>画像:</a>
+            
+            <div>
+                <input type="file" name="pdf">
+                {{ csrf_field() }}
             </div>
-    
             
     {!! Form::submit("作成",["class" => "btn btn-primary"]) !!}
-        
+            
     {!! Form::close() !!}
     
         </div>

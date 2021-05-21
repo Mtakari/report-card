@@ -16,7 +16,7 @@
     
     <h1>勘定科目分類選択</h1>
                 
-        {{Form::select('account_class_id',$account_classes , null, ["class" => "form" , "id" => "account_class_id"])}}
+        {{ Form::select('account_class_id',$account_classes , null, ["class" => "form" , "id" => "account_class_id"]) }}
                     
             
         {!! Form::submit("作成",["class" => "btn btn-primary"]) !!}

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Account_class extends Model
+class AccountClass extends Model
 {
     protected $fillable = [
         "class" , "number",    
@@ -13,5 +13,7 @@ class Account_class extends Model
     public function accounts() {
         return $this->hasMany(Account::class);
     }
+    
+    
         
 }

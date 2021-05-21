@@ -13,6 +13,10 @@
             <th>name</th>
             <td>{{ $account->name }}</td>
         </tr>
+        <tr>
+            <th>class</th>
+            <td>{{ $account->account_class->class }}</td>
+        </tr>
     </table>
     
     {!! link_to_route('accounts.edit', 'この勘定科目を編集', ['account' => $account->id], ['class' => 'btn btn-light']) !!}

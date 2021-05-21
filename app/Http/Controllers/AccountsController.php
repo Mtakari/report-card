@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Account;
 
-use App\Account_class;
+use App\AccountClass;
 
 
 class AccountsController extends Controller
@@ -22,11 +22,13 @@ class AccountsController extends Controller
             
             $user = \Auth::user();
             
-            $accounts = $user->accounts()->orderBy("created_at","desc")->paginate("100");
+            $accounts = $user->accounts()->orderBy("account_class_id")->paginate(100);
+            
+            $account_classes = AccountClass::all();
             
             return view("accounts.index",[
-                "accounts" => $accounts,    
-            ]);
+                "accounts" => $accounts,
+            ])->with(['account_classes' => $account_classes]);
             
         }
     }
@@ -42,11 +44,12 @@ class AccountsController extends Controller
         
         $account = new Account;
         
-        $account_classes = \App\Account_class::orderBy("number","asc")->pluck("class","number");
+        $account_classes = \App\AccountClass::orderBy("number","asc")->pluck("class","id");
         
         return view("accounts.create",[
-            "account" => $account,    
-        ])->with(['account_classes' => $account_classes]);;
+            "account" => $account,
+            'account_classes' => $account_classes,
+        ]);
         
     }
 
@@ -82,6 +85,7 @@ class AccountsController extends Controller
     public function show($id)
     {
         $account = Account::findOrFail($id);
+        $account_classes = AccountClass::all();
         
         if(\Auth::id() === $account->user_id) {
             
@@ -100,12 +104,14 @@ class AccountsController extends Controller
     public function edit($id)
     {
         $account = Account::findOrFail($id);
+        $account_classes = \App\AccountClass::orderBy("number","asc")->pluck("class","id");
         
         return view("accounts.edit",[
-            "account" => $account,    
+            "account" => $account,
+            "account_classes" => $account_classes
         ]);
         
-        //return redirect()->route("accounts.index");
+        
     }
 
     /**
@@ -123,9 +129,14 @@ class AccountsController extends Controller
         
         $account = Account::findOrFail($id);
         $account->name = $request->name;
+        $account->account_class_id = $request->account_class_id;
         $account->save();
         
-        return redirect()->route("accounts.index");
+        $account_classes = \App\AccountClass::orderBy("number","asc")->pluck("class","id");
+        //$account_classes->account_class_id = $request->account_class_id;
+        
+        
+        return redirect()->route("accounts.index")->with(['account_classes' => $account_classes]);
     }
 
     /**
