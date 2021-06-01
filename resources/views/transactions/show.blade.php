@@ -19,7 +19,7 @@
         </tr>
         <tr>
             <th>amount</th>
-            <td>{{ $transaction->amount }}</td>
+            <td>{{ number_format($transaction->amount) }}</td>
         </tr>
         <tr>
             <th>description</th>

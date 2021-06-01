@@ -16,19 +16,23 @@ class AccountsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($year=2021 , $month=1)
     {
         if(\Auth::check()){
             
             $user = \Auth::user();
             
-            $accounts = $user->accounts()->orderBy("account_class_id")->paginate(100);
+            $accounts = $user->accounts()->orderBy("account_class_id")->paginate(25);
             
             $account_classes = AccountClass::all();
             
+            
             return view("accounts.index",[
                 "accounts" => $accounts,
-            ])->with(['account_classes' => $account_classes]);
+                'account_classes' => $account_classes,
+                "year" => $year,
+                "month" => $month,
+            ]);
             
         }
     }

@@ -17,4 +17,26 @@ class Transaction extends Model
     public function account() {
         return $this->belongsTo(Account::class);    
     }
+    
+    public function getPdfPresignedUrl() {
+        $s3 = new Aws\S3\S3Client([
+            'credentials' => [
+            'key'    => env('AWS_ACCESS_KEY_ID'),
+            'secret' => env('AWS_SECRET_ACCESS_KEY'), 
+            ],
+            'version' => 'latest',
+            'region'  => env('AWS_DEFAULT_REGION') 
+        ]);
+
+        $command = $s3->getCommand('GetObject', array(
+            'Bucket' => env('AWS_BUCKET'), 
+            'Key' => $this->pdf, 
+        ));
+
+        $request = $s3->createPresignedRequest($command, '+60 minutes'); 
+        
+        return $request->getUrl();
+    
+    }
 }
+    

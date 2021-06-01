@@ -17,18 +17,21 @@ class TransactionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($year=2021 , $month=1)
     {
         if(\Auth::check()) {
             
             $user = \Auth::user();
             
-            $transactions = $user->transactions()->orderBy("account_id")->paginate(100);
+            
+            $transactions = $user->transactions()->orderBy("account_id")->paginate(25);
             
             $accounts = Account::all();
             
             return view("transactions.index",[
                 "transactions" => $transactions,
+                "year" => $year,
+                "month" => $month,
             ])->with(['accounts' => $accounts]); 
         }    
     }
@@ -78,15 +81,16 @@ class TransactionsController extends Controller
             "day" => $request->day,
             "amount" => $request->amount,
             "description" => $request->description,
-            "pdf" => $request->pdf,
+            //"pdf" => $request->pdf,
             "account_id" => $request->account_id,
         ]);
         
-        $pdf = $request->file('pdf');
-        $path = Storage::disk('s3')->putFile('pdf', $pdf, 'public');
-        $transaction->pdf = $path;
-        $transaction->save();
-        
+            $pdf = $request->file('pdf');
+        if($pdf != null) {
+            $path = Storage::disk('s3')->putFile('pdf', $pdf, 'private');
+            $transaction->pdf = $path;
+            $transaction->save();
+        }
         return redirect()->route("transactions.index");
     }
 
@@ -150,26 +154,21 @@ class TransactionsController extends Controller
         ]);
         
         $transaction = Transaction::findOrFail($id);
+        $transaction->account_id =$request->account_id;
+        $transaction->day = $request->day;
+        $transaction->amount = $request->amount;
+        $transaction->description = $request->description;
         
         $pdf = $request->file('pdf');
-
-        $s3_delete = Storage::disk('s3')->delete($transaction->pdf);
-        
-        if($s3_delete === true ){
-            $path = Storage::disk('s3')->putFile('pdf', $pdf, 'public');
-            
+        if($pdf != null) {
+            $s3_delete = Storage::disk('s3')->delete($transaction->pdf);
+            $path = Storage::disk('s3')->putFile('pdf', $pdf, 'private');
             $transaction->pdf = $path;
-            $transaction->account_id =$request->account_id;
-            $transaction->day = $request->day;
-            $transaction->amount = $request->amount;
-            $transaction->description = $request->description;
-            
-            $transaction->save();   
+            $transaction->save();
         }else{
-            echo "画像の変更ができていません" . PHP_EOL;
-        }
-    
-        
+            @include("commons.error_messages");    
+        }    
+            
         $accounts = $user->accounts()->orderBy("id","asc")->pluck("id","name");
         
         
